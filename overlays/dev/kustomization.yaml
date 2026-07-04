@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Dev environment overlay.
+# Deploys everything from base into the "voting" namespace.
+namespace: voting
+
+resources:
+  - ../../base
+
+# Image tags for this environment.
+# The CI pipeline updates these via:
+#   kustomize edit set image votingappregistry15.azurecr.io/votingapp-<svc>=...:<buildId>
+images:
+  - name: votingappregistry15.azurecr.io/votingapp-vote
+    newTag: latest
+  - name: votingappregistry15.azurecr.io/votingapp-result
+    newTag: latest
+  - name: votingappregistry15.azurecr.io/votingapp-worker
+    newTag: latest
