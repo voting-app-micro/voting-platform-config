@@ -15,7 +15,7 @@ spec:
         app: vote
     spec:
       containers:
-      - image: votingappregistry15.azurecr.io/votingapp-vote:latest
+      - image: votingapp-vote
         name: vote
         ports:
         - containerPort: 80

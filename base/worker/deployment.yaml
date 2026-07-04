@@ -15,5 +15,5 @@ spec:
         app: worker
     spec:
       containers:
-      - image: votingappregistry15.azurecr.io/votingapp-worker:latest
+      - image: votingapp-worker
         name: worker

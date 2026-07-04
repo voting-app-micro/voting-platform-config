@@ -30,9 +30,9 @@ Five components (the standard example voting app):
 
 | Component | Image | Service | Notes |
 |-----------|-------|---------|-------|
-| vote | `votingappregistry15.azurecr.io/votingapp-vote` | NodePort 31000 | Python front-end |
-| result | `votingappregistry15.azurecr.io/votingapp-result` | NodePort 31001 | Node.js results page |
-| worker | `votingappregistry15.azurecr.io/votingapp-worker` | none | .NET background worker |
+| vote | `votingappregistry7.azurecr.io/votingapp-vote` | NodePort 31000 | Python front-end |
+| result | `votingappregistry7.azurecr.io/votingapp-result` | NodePort 31001 | Node.js results page |
+| worker | `votingappregistry7.azurecr.io/votingapp-worker` | none | .NET background worker |
 | redis | `redis:alpine` (public) | ClusterIP 6379 | vote queue |
 | db | `postgres:15-alpine` (public) | ClusterIP 5432 | vote store |
 
@@ -51,16 +51,29 @@ to ACR                            overlays/dev/kustomization.yaml   ──►   
 - Argo CD watches this repo and reconciles the cluster to match.
 - No `kubectl apply` from CI — git is the single source of truth.
 
-## Image promotion
+## Image registry & tags (where to change them)
 
-Image tags live in the `images:` transformer of each overlay. The CI pipeline promotes a build with:
+`base/` uses **registry-agnostic** image names (`votingapp-vote`, `votingapp-result`, `votingapp-worker`).
+The **registry** and **tag** for each app live in ONE place — the `images:` block of the overlay:
+[`overlays/dev/kustomization.yaml`](overlays/dev/kustomization.yaml):
+
+```yaml
+images:
+  - name: votingapp-vote                                   # logical name (matches base)
+    newName: votingappregistry7.azurecr.io/votingapp-vote  # registry — change here
+    newTag: "17"                                           # tag — change here
+```
+
+- **Change the registry** → edit `newName` (per app).
+- **Change the image tag** → edit `newTag` (per app).
+- **Never** edit `base/` for registry/tag — base stays generic so multiple environments can reuse it.
+
+The CI pipeline promotes a build by rewriting this block:
 
 ```bash
 kustomize edit set image \
-  votingappregistry15.azurecr.io/votingapp-vote=votingappregistry15.azurecr.io/votingapp-vote:<BuildId>
+  votingapp-vote=votingappregistry7.azurecr.io/votingapp-vote:<BuildId>
 ```
-
-(Tags are currently `latest`; the pipeline replaces them per build.)
 
 ## Local usage
 
