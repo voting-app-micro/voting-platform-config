@@ -18,10 +18,10 @@ resources:
 images:
   - name: votingapp-vote
     newName: votingappregistry7.azurecr.io/votingapp-vote
-    newTag: "17"
+    newTag: "19"
   - name: votingapp-result
     newName: votingappregistry7.azurecr.io/votingapp-result
     newTag: "17"
   - name: votingapp-worker
     newName: votingappregistry7.azurecr.io/votingapp-worker
-    newTag: "17"
+    newTag: "18"
