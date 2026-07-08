@@ -21,7 +21,7 @@ images:
     newTag: "20"
   - name: votingapp-result
     newName: votingappregistry7.azurecr.io/votingapp-result
-    newTag: "17"
+    newTag: "1.0.20107"
   - name: votingapp-worker
     newName: votingappregistry7.azurecr.io/votingapp-worker
     newTag: "18"
