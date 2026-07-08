@@ -18,7 +18,7 @@ resources:
 images:
   - name: votingapp-vote
     newName: votingappregistry7.azurecr.io/votingapp-vote
-    newTag: "20"
+    newTag: "fd4e4861f"
   - name: votingapp-result
     newName: votingappregistry7.azurecr.io/votingapp-result
     newTag: "17"
