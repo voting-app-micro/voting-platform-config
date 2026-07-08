@@ -24,4 +24,4 @@ images:
     newTag: "17"
   - name: votingapp-worker
     newName: votingappregistry7.azurecr.io/votingapp-worker
-    newTag: "18"
+    newTag: "workers"
